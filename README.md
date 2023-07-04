@@ -46,6 +46,7 @@ It supports SOL and USDC transactions
     "symbol": "SOL",
     "private_key": "{privateKey}"
 }'
+```
 ---
 <!-- Adds open source license -->
 ## License
