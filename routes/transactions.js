@@ -1,7 +1,7 @@
-var express = require('express');
-var SolscanService = require('../services/solscanService');
+const express = require('express');
+const SolscanService = require('../services/solscanService');
 
-var router = express.Router();
+const router = express.Router();
 
 /* GET balance */
 router.get('/', async function(req, res, next) {
@@ -25,7 +25,7 @@ router.get('/usdc', async function(req, res, next) {
     res.status(400).send({ error: 'address is required' });
   }
 
-  res.send(await (new SolscanService()).getSplTransfers(req.query.address, "USDC"));
+  res.send(await (new SolscanService()).getSplTransfers(req.query.address, 'USDC'));
 });
 
 module.exports = router;

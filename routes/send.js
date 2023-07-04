@@ -1,7 +1,7 @@
-var express = require('express');
-var solWallet = require('../services/solWalletService');
+const express = require('express');
+const SolWallet = require('../services/solWalletService');
 
-var router = express.Router();
+const router = express.Router();
 
 /* POST send */
 router.post('/', async function(req, res, next) {
@@ -27,17 +27,7 @@ router.post('/', async function(req, res, next) {
   const amount = req.body.amount;
   const symbol = req.body.symbol;
 
-  console.log(fromAddress);
-  console.log(secretKey);
-  console.log(toAddress);
-  console.log(amount);
-  console.log(symbol);
-
-  res.send(await (new solWallet()).transferFunds(fromAddress, toAddress, symbol, amount, secretKey));
-  
-  // res.send({ msg: true});
-  // res.send(await (new SolscanService()).getTransactions(req.query.address));
+  res.send(await (new SolWallet()).transferFunds(fromAddress, toAddress, symbol, amount, secretKey));
 });
-
 
 module.exports = router;

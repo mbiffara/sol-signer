@@ -1,10 +1,9 @@
-
 const axios = require('axios');
 const TransactionReaderService = require('./transactionReaderService');
 
 class SolscanService {
-  constructor () {
-    this.apiToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkQXQiOjE2ODgzMTIzNDk4NjUsImVtYWlsIjoibWFyY2Vsb0BwYWN0dGEuYXBwIiwiYWN0aW9uIjoidG9rZW4tYXBpIiwiaWF0IjoxNjg4MzEyMzQ5fQ.YEJYpw8hO7l8hCoODcfh9nhyLySDBqrSpYhMhqbljjY";
+  constructor() {
+    this.apiToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkQXQiOjE2ODgzMTIzNDk4NjUsImVtYWlsIjoibWFyY2Vsb0BwYWN0dGEuYXBwIiwiYWN0aW9uIjoidG9rZW4tYXBpIiwiaWF0IjoxNjg4MzEyMzQ5fQ.YEJYpw8hO7l8hCoODcfh9nhyLySDBqrSpYhMhqbljjY';
   }
 
   async getTransactions(address) {
@@ -34,9 +33,9 @@ class SolscanService {
   async makeRequest(method, account, limit = 50) {
     const url = `https://public-api.solscan.io${method}?account=${account}&limit=${limit}`;
 
-    const response = await axios.get(url, { headers: { 'token': this.apiToken } });
+    const response = await axios.get(url, { headers: { token: this.apiToken } });
 
-    return response.data
+    return response.data;
   }
 }
 

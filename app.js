@@ -1,15 +1,15 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var balanceRouter = require('./routes/balance');
-var transactionsRouter = require('./routes/transactions');
-var sendRouter = require('./routes/send');
-// var usersRouter = require('./routes/users');
+const indexRouter = require('./routes/index');
+const balanceRouter = require('./routes/balance');
+const transactionsRouter = require('./routes/transactions');
+const sendRouter = require('./routes/send');
+// const usersRouter = require('./routes/users');
 
-var app = express();
+const app = express();
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -18,8 +18,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Middelware, voor alle /api/* request
-app.all('', function(req, res, next) 
-{
+app.all('', function(req, res, next) {
   // Set response contenttype
   res.contentType('application/json');
   res.setHeader('x-bahia-sol-signer', '0.0.1');

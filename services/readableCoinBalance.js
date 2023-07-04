@@ -1,6 +1,5 @@
-
 function readableCoinBalance(coin, balance) {
-  switch(coin) {
+  switch (coin) {
     case 'SOL':
       return balance / 1000000000;
     case 'USDC':
