@@ -48,7 +48,6 @@ It supports SOL and USDC transactions
 }'
 ```
 ---
-<!-- Adds open source license -->
 ## License
 MIT License
 
@@ -73,6 +72,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 <!-- Adds line  -->
 ---
-© 2023 Bahia.Exchange
-[Bahia.Exchange]: https://bahia.exchange
+© 2023 [Bahia.Exchange](https://bahia.exchange)
+
 
