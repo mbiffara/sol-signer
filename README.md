@@ -10,24 +10,31 @@ You can also check balance and transactions history.
 ## Usage
 
 **Check Balance**
+
 Returns balance in SOL and USDC
 
 `curl --location --request GET 'http://localhost:3000/balance?address={publicKey}'`
 
 **Check Transactions History**
+
 Gets native transactions history
 
 `curl --location --request GET 'http://localhost:3000/transactions?address={publicKey}'`
 
 **Check USDC Transactions History**
+
 Gets USDC transactions history
+
 `curl --location --request GET 'http://localhost:3000/transactions/usdc?address={publicKey}'`
 
 **Check SOL Transactions History**
+
 Gets SOL transactions history
+
 `curl --location --request GET 'http://localhost:3000/transactions/sol?address={publicKey}'`
 
 **Send Transaction**
+
 It supports SOL and USDC transactions
 
 ```curl --location --request POST 'http://localhost:3000/transaction' \
