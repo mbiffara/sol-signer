@@ -22,11 +22,10 @@ You can also check balance and transactions history.
 ```curl --location --request POST 'http://localhost:3000/transaction' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "from": "{publicKey}",
-    "to": "{publicKey}",
-    "amount": 1,
+    "address": "{publicKey}",
+    "destination": "{publicKey}",
+    "amount": 0.1,
     "symbol": "SOL",
-    "privateKey": "{privateKey}"
+    "private_key": "{privateKey}"
 }'
-
 
