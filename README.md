@@ -27,6 +27,6 @@ You can also check balance and transactions history.
     "amount": 1,
     "symbol": "SOL",
     "privateKey": "{privateKey}"
-}'```
+}'
 
 
