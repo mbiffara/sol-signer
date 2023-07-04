@@ -1,7 +1,7 @@
 <!-- Add a h1 title -->
 # Bahia Sol Signer
 <!-- adds description of project -->
-Express API Service to interact with Sol blockchain, it doesn't store any private key, it just signs transactions and send them to the blockchain.
+Express API Service to interact with the Solana blockchain, it doesn't store any private key, it just signs transactions and send them to the blockchain.
 You can also check balance and transactions history.
 
 ## Installation
