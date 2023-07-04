@@ -1,6 +1,7 @@
 const web3 = require("@solana/web3.js");
 const splToken = require('@solana/spl-token');
-const { getOrCreateAssociatedTokenAccount, transfer } = require 
+const bs58 = require('bs58');
+const { getOrCreateAssociatedTokenAccount, transfer } = require('@solana/spl-token');
 const { Connection, Keypair, clusterApiUrl, getAccount, PublicKey } = require("@solana/web3.js");
 const readableCoinBalance = require("./readableCoinBalance");
 
@@ -94,25 +95,25 @@ class SolWalletService {
       const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
       const usdcMint = new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v");
 
-      const fromKeyPair = Keypair.fromSecretKey(getSecretKey(secretKey));
+      const fromKeyPair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
 
-      const toPublicKey = new PublicKey(address);
+      const toPublicKey = new PublicKey(toAddress);
 
-      const fromTokenAccount = await splToken.getOrCreateAssociatedTokenAccount(
-        SOL_CONNECTION,
+      const fromTokenAccount = await getOrCreateAssociatedTokenAccount(
+        connection,
         fromKeyPair,
         usdcMint,
         fromKeyPair.publicKey
       )
 
-      const toTokenAccount = await splToken.getOrCreateAssociatedTokenAccount(
-        SOL_CONNECTION,
+      const toTokenAccount = await getOrCreateAssociatedTokenAccount(
+        connection,
         fromKeyPair,
         usdcMint,
         toPublicKey
       );
 
-      const transaction = new solWeb3.Transaction().add(
+      const transaction = new web3.Transaction().add(
         splToken.createTransferInstruction(
           fromTokenAccount.address, // source address
           toTokenAccount.address, // dest address
@@ -124,7 +125,7 @@ class SolWalletService {
         )
       );
 
-      const signature = await solWeb3.sendAndConfirmTransaction(
+      const signature = await web3.sendAndConfirmTransaction(
         connection,
         transaction,
         [fromKeyPair],
@@ -138,7 +139,7 @@ class SolWalletService {
     verifyKeyPair(address, secretKey) {
       const publicKey = new PublicKey(address);
 
-      const keypair = Keypair.fromSecretKey(getSecretKey(secretKey));
+      const keypair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
 
       return keypair.publicKey.toBase58() === publicKey.toBase58();
     }
