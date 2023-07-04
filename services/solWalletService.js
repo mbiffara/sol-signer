@@ -62,16 +62,19 @@ class SolWalletService {
     async verifyFunds(address, amount, symbol) {
       if (symbol === "SOL") {
         const solBalance = await this.getSolBalance(address);
-        return solBalance?.lamports >= amount;  
+        return solBalance?.lamports >= Number(amount)*Math.pow(10, 9);
       } else if (symbol === "USDC") {
         const usdcBalance = await this.getUSDCBalance(address);
-        return usdcBalance?.usdcBalance >= amount;
+        return Number(usdcBalance?.usdcBalance) >= Number(amount)*Math.pow(10, 6);
       }
     }
 
     async transferFunds(fromAddress, toAddress, symbol, amount, secretKey) {
-      if (!this.verifyKeyPair(fromAddress, secretKey)) return false;
-      if (!this.verifyFunds(fromAddress, amount, symbol)) return false;
+      const fundsAvailable = await this.verifyFunds(fromAddress, amount, symbol);
+      const validKeyPair = await this.verifyKeyPair(fromAddress, secretKey);
+
+      if (!fundsAvailable) return "Insufficient funds";
+      if (!validKeyPair) return "Invalid fromAddress/SecretKey combination";
 
       if (symbol === "SOL") {
         return this.transferSOL(fromAddress, toAddress, amount, secretKey);
@@ -137,11 +140,15 @@ class SolWalletService {
     }
 
     verifyKeyPair(address, secretKey) {
-      const publicKey = new PublicKey(address);
+      try {
+        const publicKey = new PublicKey(address);
+        const keypair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
 
-      const keypair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
-
-      return keypair.publicKey.toBase58() === publicKey.toBase58();
+        return keypair.publicKey.toBase58() === publicKey.toBase58();
+      }
+      catch (e) {
+        return false;
+      }
     }
 
     getSecretKey(secretKey){
