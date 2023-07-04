@@ -22,7 +22,7 @@ class SolWalletService {
   }
 
   async getSolBalance(address) {
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new Connection(clusterApiUrl(process.env.SOL_CLUSTER), 'confirmed');
 
     const base58publicKey = new web3.PublicKey(address);
     const balance = await connection.getAccountInfo(base58publicKey);
@@ -31,10 +31,10 @@ class SolWalletService {
   }
 
   async getUSDCBalance(address) {
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
-    const usdcMint = new web3.PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+    const connection = new Connection(clusterApiUrl(process.env.SOL_CLUSTER), 'confirmed');
+    const usdcMint = new PublicKey(process.env.USDC_MINT_ADDRESS);
 
-    const base58publicKey = new web3.PublicKey(address);
+    const base58publicKey = new PublicKey(address);
 
     const ata = await splToken.getAssociatedTokenAddress(usdcMint, base58publicKey);
 
@@ -50,7 +50,7 @@ class SolWalletService {
   }
 
   async getTransactions(address) {
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new Connection(clusterApiUrl(process.env.SOL_CLUSTER), 'confirmed');
     const publicKey = new web3.PublicKey(address);
 
     const transactions = await connection.getConfirmedSignaturesForAddress2(publicKey, { limit: 100 });
@@ -93,7 +93,7 @@ class SolWalletService {
       })
     );
 
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new Connection(clusterApiUrl(process.env.SOL_CLUSTER), 'confirmed');
 
     const signature = await web3.sendAndConfirmTransaction(
       connection,
@@ -106,8 +106,8 @@ class SolWalletService {
   }
 
   async transferUSDC(fromAddress, toAddress, amount, secretKey) {
-    const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed');
-    const usdcMint = new PublicKey('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
+    const connection = new Connection(clusterApiUrl(process.env.SOL_CLUSTER), 'confirmed');
+    const usdcMint = new PublicKey(process.env.USDC_MINT_ADDRESS);
 
     const fromKeyPair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
 

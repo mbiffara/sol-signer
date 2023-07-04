@@ -3,7 +3,7 @@ const TransactionReaderService = require('./transactionReaderService');
 
 class SolscanService {
   constructor() {
-    this.apiToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVhdGVkQXQiOjE2ODgzMTIzNDk4NjUsImVtYWlsIjoibWFyY2Vsb0BwYWN0dGEuYXBwIiwiYWN0aW9uIjoidG9rZW4tYXBpIiwiaWF0IjoxNjg4MzEyMzQ5fQ.YEJYpw8hO7l8hCoODcfh9nhyLySDBqrSpYhMhqbljjY';
+    this.apiToken = process.env.SOLSCAN_API_KEY;
   }
 
   async getTransactions(address) {
