@@ -85,13 +85,28 @@ class SolWalletService {
     }
 
     async transferSOL(fromAddress, toAddress, amount, secretKey) {
-      return new solWeb3.Transaction().add(
-        solWeb3.SystemProgram.transfer({
+      const fromKeyPair = Keypair.fromSecretKey(this.getSecretKey(secretKey));
+      const toPublicKey = new PublicKey(toAddress);
+
+      const transaction = new web3.Transaction().add(
+        web3.SystemProgram.transfer({
           fromPubkey: fromKeyPair.publicKey,
-          toPubkey: new solWeb3.PublicKey(toPubKey),
-          lamports: solWeb3.LAMPORTS_PER_SOL * +(amount || 0),
+          toPubkey: toPublicKey,
+          lamports: web3.LAMPORTS_PER_SOL * +(amount || 0),
         })
       )
+
+      const connection = new Connection(clusterApiUrl("mainnet-beta"), "confirmed");
+
+      const signature = await web3.sendAndConfirmTransaction(
+        connection,
+        transaction,
+        [fromKeyPair],
+        { commitment: 'confirmed' }
+      );
+
+      console.log(signature);
+      return signature;
     }
 
     async transferUSDC(fromAddress, toAddress, amount, secretKey) {
