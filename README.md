@@ -9,7 +9,8 @@ You can also check balance and transactions history.
 
 ## Setup
 
-```SOL_CLUSTER=mainnet-beta
+```
+SOL_CLUSTER=mainnet-beta
 SOLSCAN_API_KEY=YOUR_SOLSCAN_API_KEY
 USDC_MINT_ADDRESS=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
 ```
