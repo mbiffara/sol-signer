@@ -44,9 +44,9 @@ class SolWalletService {
   }
 
   async createWallet() {
-    this.solWallet = Keypair.generate();
-    console.log(this.solWallet);
-    return this.solWallet;
+    const solWallet = Keypair.generate();
+
+    return { publicKey: solWallet.publicKey, secretKey: bs58.encode(solWallet.secretKey) };
   }
 
   async getTransactions(address) {
@@ -55,16 +55,6 @@ class SolWalletService {
 
     const transactions = await connection.getConfirmedSignaturesForAddress2(publicKey, { limit: 100 });
     return transactions;
-  }
-
-  async verifyFunds(address, amount, symbol) {
-    if (symbol === 'SOL') {
-      const solBalance = await this.getSolBalance(address);
-      return solBalance?.lamports >= Number(amount) * Math.pow(10, 9);
-    } else if (symbol === 'USDC') {
-      const usdcBalance = await this.getUSDCBalance(address);
-      return Number(usdcBalance?.usdcBalance) >= Number(amount) * Math.pow(10, 6);
-    }
   }
 
   async transferFunds(fromAddress, toAddress, symbol, amount, secretKey) {
@@ -146,6 +136,16 @@ class SolWalletService {
     );
 
     return signature;
+  }
+
+  async verifyFunds(address, amount, symbol) {
+    if (symbol === 'SOL') {
+      const solBalance = await this.getSolBalance(address);
+      return solBalance?.lamports >= Number(amount) * Math.pow(10, 9);
+    } else if (symbol === 'USDC') {
+      const usdcBalance = await this.getUSDCBalance(address);
+      return Number(usdcBalance?.usdcBalance) >= Number(amount) * Math.pow(10, 6);
+    }
   }
 
   verifyKeyPair(address, secretKey) {

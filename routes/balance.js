@@ -28,8 +28,4 @@ router.get('/sol', async function(req, res, next) {
   res.send(await (new SolWallet()).getSolBalance(req.query.address));
 });
 
-router.get('/create', async function(req, res, next) {
-  res.send(await (new SolWallet()).createWallet());
-});
-
 module.exports = router;
