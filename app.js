@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.all('', function(req, res, next) {
   // Set response contenttype
   res.contentType('application/json');
-  res.setHeader('x-bahia-sol-signer', '0.0.1');
+  res.setHeader('x-sol-signer', '0.0.1');
 
   next();
 });

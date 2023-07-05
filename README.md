@@ -1,11 +1,18 @@
-<!-- Add a h1 title -->
-# Bahia Sol Signer
-<!-- adds description of project -->
-Express API Service to interact with the Solana blockchain, it doesn't store any private key, it just signs transactions and send them to the blockchain.
+# Sol Signer
+
+Express API Service to interact with the Solana blockchain, it doesn't store or log any private key, it just signs transactions and sends them to the blockchain.
+It supports SOL and USDC transactions.
 You can also check balance and transactions history.
 
 ## Installation
 `yarn`
+
+## Setup
+
+```SOL_CLUSTER=mainnet-beta
+SOLSCAN_API_KEY=YOUR_SOLSCAN_API_KEY
+USDC_MINT_ADDRESS=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
+```
 
 ## Usage
 
@@ -51,7 +58,7 @@ It supports SOL and USDC transactions
 ## License
 MIT License
 
-Copyright (c) [2023] [Bahia.Exchange]
+Copyright (c) [year] [Bahia.Exchange]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
