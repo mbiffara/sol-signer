@@ -21,7 +21,7 @@ class TransactionReaderService {
 
   easyReadSPL(transaction) {
     return {
-      id: transaction.signature.first,
+      id: transaction.signature[0],
       symbol: transaction.symbol,
       address: transaction.address,
       from: transaction.changeType === 'inc' ? transaction.address : this.address,
