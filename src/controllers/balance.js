@@ -45,7 +45,7 @@ export const getSolBalance = async (req, res) => {
     (error) => error
   );
 
-  if (balance) {
+  if (Object.keys(balance).length > 0) {
     endRequest({ response: balance, code: 200, res });
   } else {
     catchRequest({
