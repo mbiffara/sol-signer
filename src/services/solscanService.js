@@ -1,7 +1,6 @@
 import axios from "axios";
 import { all, bySymbol } from "./transactionReaderService.js";
 import { CURRENCIES } from "../constants/currencies.js";
-import { response } from "express";
 
 export const getTransactions = async (address) => {
   const transactions = await makeRequest("/account/transactions", address);
@@ -28,9 +27,11 @@ export const getSplTransfers = async (address, symbol = null) => {
 const makeRequest = async (method, account, limit = 50) => {
   const url = `https://public-api.solscan.io${method}?account=${account}&limit=${limit}`;
 
-  const response = await axios.get(url, {
-    headers: { token: process.env.SOLSCAN_API_KEY },
-  });
+  const response = await axios
+    .get(url, {
+      headers: { token: process.env.SOLSCAN_API_KEY },
+    })
+    .catch((error) => error.response);
 
   return response;
 };

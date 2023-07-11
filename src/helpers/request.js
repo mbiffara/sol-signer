@@ -21,7 +21,7 @@ export const endRequest = ({
 
 export const catchRequest = ({ err, res }) => {
   logger.error(inspect(err, { showHidden: false, depth: null }));
-  return res.status((err && res.status) || 503).json([
+  return res.status(err.code).json([
     {
       code: err && err.code,
       message: err && err.message,

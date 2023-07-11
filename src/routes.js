@@ -1,3 +1,4 @@
+import { validateSchemaAndFail } from "./middlewares/params.js";
 import health from "./controllers/health_check.js";
 
 import {
@@ -11,28 +12,43 @@ import {
   getSolBalance,
   getUsdcBalance,
 } from "./controllers/balance.js";
+
 import { send } from "./controllers/send.js";
-import balance from "./schemas/balance.js";
-import { validateSchemaAndFail } from "./middlewares/params.js";
+
+import balanceSchema from "./schemas/balance.js";
+import transactionsSchema from "./schemas/transactions.js";
+import sendSchema from "./schemas/send.js";
 
 export default (app) => {
   app.get("/health", health);
 
-  app.get("/balance", [validateSchemaAndFail(balance)], getAllBalance);
-  app.get("/balance/usdc", [validateSchemaAndFail(balance)], getUsdcBalance);
-  app.get("/balance/sol", [validateSchemaAndFail(balance)], getSolBalance);
+  app.get("/balance", [validateSchemaAndFail(balanceSchema)], getAllBalance);
+  app.get(
+    "/balance/usdc",
+    [validateSchemaAndFail(balanceSchema)],
+    getUsdcBalance
+  );
+  app.get(
+    "/balance/sol",
+    [validateSchemaAndFail(balanceSchema)],
+    getSolBalance
+  );
 
-  app.get("/transactions", [validateSchemaAndFail(balance)], getTransacions);
+  app.get(
+    "/transactions",
+    [validateSchemaAndFail(transactionsSchema)],
+    getTransacions
+  );
   app.get(
     "/transactions/usdc",
-    [validateSchemaAndFail(balance)],
+    [validateSchemaAndFail(transactionsSchema)],
     getUsdcTransacions
   );
   app.get(
     "/transactions/sol",
-    [validateSchemaAndFail(balance)],
+    [validateSchemaAndFail(transactionsSchema)],
     getSolTransacions
   );
 
-  app.post("/send", send);
+  app.post("/send", [validateSchemaAndFail(sendSchema)], send);
 };

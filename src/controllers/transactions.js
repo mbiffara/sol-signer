@@ -1,4 +1,3 @@
-import { CURRENCIES } from "../constants/currencies.js";
 import {
   getTransactions,
   getSolTransfers,
@@ -14,20 +13,27 @@ export const getTransacions = async (req, res) => {
     endRequest({ response: transactions.data, code: 200, res });
   } else {
     catchRequest({
-      err: { code: transactions.status, message: transactions.statusText },
-      res,
+      err: {
+        code: transactions.status,
+        message: transactions.data.error.message,
+      },
+      res: res,
     });
   }
 };
 
 export const getSolTransacions = async (req, res) => {
   const transactions = await getSolTransfers(req.query.address);
+
   if (transactions.status === 200) {
     endRequest({ response: transactions.data, code: 200, res });
   } else {
     catchRequest({
-      err: { code: res.data.status, message: res.data.error.message },
-      res,
+      err: {
+        code: transactions.status,
+        message: transactions.data.error.message,
+      },
+      res: res,
     });
   }
 };
@@ -39,8 +45,11 @@ export const getUsdcTransacions = async (req, res) => {
     endRequest({ response: transactions.data, code: 200, res });
   } else {
     catchRequest({
-      err: { code: res.data.status, message: res.data.error.message },
-      res,
+      err: {
+        code: transactions.status,
+        message: transactions.data.error.message,
+      },
+      res: res,
     });
   }
 };

@@ -9,6 +9,7 @@ import { getOrCreateAssociatedTokenAccount } from "@solana/spl-token";
 import { Connection, Keypair, clusterApiUrl, PublicKey } from "@solana/web3.js";
 import readableCoinBalance from "../mappers/readableCoinBalance.js";
 import { CURRENCIES } from "../constants/currencies.js";
+import logger from "../logger.js";
 
 export const getBalance = async (address) => {
   const solBalance = await getSOLBalance(address);
@@ -28,9 +29,7 @@ export const getSOLBalance = async (address) => {
   );
 
   const base58publicKey = new web3.PublicKey(address);
-  const balance = await connection.getAccountInfo(base58publicKey);
-
-  return balance;
+  return await connection.getAccountInfo(base58publicKey);
 };
 
 export const getUSDCBalance = async (address) => {
@@ -38,13 +37,16 @@ export const getUSDCBalance = async (address) => {
     clusterApiUrl(process.env.SOL_CLUSTER),
     "confirmed"
   );
+
   const usdcMint = new PublicKey(process.env.USDC_MINT_ADDRESS);
 
   const base58publicKey = new PublicKey(address);
 
   const ata = await getAssociatedTokenAddress(usdcMint, base58publicKey);
 
-  const accountData = await getAccount(connection, ata, "confirmed");
+  const accountData = await getAccount(connection, ata, "confirmed").catch(
+    (response) => response
+  );
 
   return {
     usdcAddress: accountData.address,
@@ -188,7 +190,7 @@ export const verifyFunds = async (address, amount, symbol) => {
   }
 };
 
-export const verifyKeyPair = (address, secretKey) => {
+export const verifyKeyPair = async (address, secretKey) => {
   try {
     const publicKey = new PublicKey(address);
     const keypair = Keypair.fromSecretKey(getSecretKey(secretKey));
